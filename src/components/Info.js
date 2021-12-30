@@ -1,11 +1,12 @@
-import React from 'react';
-import { GithubContext } from '../context/context';
-import styled from 'styled-components';
-import { GoRepo, GoGist } from 'react-icons/go';
-import { FiUsers, FiUserPlus } from 'react-icons/fi';
+import React from "react";
+import { PoliticsContext } from "../context/context";
+import styled from "styled-components";
+import { GoRepo, GoGist } from "react-icons/go";
+import { FiUsers, FiUserPlus } from "react-icons/fi";
 
 const UserInfo = () => {
-  return <h2>user info component</h2>;
+  const data = React.useContext(PoliticsContext);
+  return <h2>user info component : {data}</h2>;
 };
 
 const Wrapper = styled.section`
@@ -61,10 +62,3 @@ const Wrapper = styled.section`
 `;
 
 export default UserInfo;
-
-// git init
-// git add README.md
-// git commit -m "first commit"
-// git branch -M main
-// git remote add origin https://github.com/EricChukoltyansky/Politics.git
-// git push -u origin main
