@@ -11,8 +11,11 @@ const PoliticsContext = React.createContext();
 // Provider, Consumer - PoliticsContext.Provider
 
 const PoliticsProvider = ({ children }) => {
+  const [githubUser, setGithubUser] = useState(mockUser);
+  const [repos, setRepos] = useState(mockRepos);
+  const [followers, setFollowers] = useState(mockFollowers);
   return (
-    <PoliticsContext.Provider value={"hello"}>
+    <PoliticsContext.Provider value={{ githubUser, repos, followers }}>
       {children}
     </PoliticsContext.Provider>
   );

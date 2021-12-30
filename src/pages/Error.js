@@ -18,7 +18,7 @@ const Wrapper = styled.section`
   min-height: 100vh;
   display: grid;
   place-items: center;
-  background: var(--clr-primary-10);
+  background: var(--clr-primary-6);
   text-align: center;
   h1 {
     font-size: 10rem;
