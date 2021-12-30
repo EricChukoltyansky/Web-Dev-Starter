@@ -43,11 +43,23 @@ const UserInfo = () => {
   return (
     <section className="section">
       <Wrapper className="section-center">
-        {items.map(item =>{
-          return <p>{item.value}</p>
+        {items.map((item) => {
+          return <Item key={item.id} {...item}></Item>;
         })}
       </Wrapper>
     </section>
+  );
+};
+
+const Item = ({ icon, label, value, color }) => {
+  return (
+    <article className="item">
+      <span className={color}>{icon}</span>
+      <div>
+        <h3>{value}</h3>
+        <p>{label}</p>
+      </div>
+    </article>
   );
 };
 
