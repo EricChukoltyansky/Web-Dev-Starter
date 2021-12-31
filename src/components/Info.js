@@ -13,14 +13,14 @@ const UserInfo = () => {
     {
       id: 1,
       icon: <GoRepo className="icon" />,
-      label: "repos",
+      label: "votes",
       value: public_repos,
       color: "pink",
     },
     {
       id: 2,
       icon: <FiUsers className="icon" />,
-      label: "followers",
+      label: "presence%",
       value: followers,
       color: "green",
     },
@@ -34,7 +34,7 @@ const UserInfo = () => {
     {
       id: 4,
       icon: <GoGist className="icon" />,
-      label: "gists",
+      label: "Money spent",
       value: public_gists,
       color: "yellow",
     },
