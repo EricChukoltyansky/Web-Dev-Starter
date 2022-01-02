@@ -14,6 +14,29 @@ const PoliticsProvider = ({ children }) => {
   const [githubUser, setGithubUser] = useState(mockUser);
   const [repos, setRepos] = useState(mockRepos);
   const [followers, setFollowers] = useState(mockFollowers);
+  const [requests, setRequests] = useState(0);
+  const [loading, setIsLoading] = useState(false);
+
+  // const checkRequest = () => {
+  //   axios(`${rootUrl}/rate_limit`)
+  //     .then((data) => {})
+  //     .catch((err) => console.log(err));
+  // };
+
+  const checkRequest = async () => {
+    try {
+      const {data} = await axios.get(rootUrl);
+      let {rate:{remaining}} = data
+      setRequests(remaining)
+      if(remaining === 0) {
+        
+      }
+    } catch (err) {}
+  };
+
+  useEffect(() => {
+    checkRequest();
+  }, []);
   return (
     <PoliticsContext.Provider value={{ githubUser, repos, followers }}>
       {children}
