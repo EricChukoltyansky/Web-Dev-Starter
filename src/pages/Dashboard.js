@@ -17,7 +17,7 @@ if(isLoading) {
       <Search />
       <Info />
       <User />
-      {/* <Repos /> */}
+      <Repos />
     </main>
   );
 };

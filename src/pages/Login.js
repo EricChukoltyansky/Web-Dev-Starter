@@ -1,16 +1,20 @@
-import React from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
-import styled from 'styled-components';
-import loginImg from '../images/apolitical-group-limited-logo-vector.svg';
+import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import styled from "styled-components";
+import loginImg from "../images/github-icon-logo-svg-vector.svg";
 const Login = () => {
-  const {loginWithRedirect} = useAuth0()
-  return <Wrapper>
-    <div className="container">
-      <img src={loginImg} alt="" />
-      <h1>Your App to Keep Politicians Close</h1>
-      <button className='btn' onClick={loginWithRedirect}>Login / SignUp</button>
-    </div>
-  </Wrapper>
+  const { loginWithRedirect } = useAuth0();
+  return (
+    <Wrapper>
+      <div className="container">
+        <img src={loginImg} alt="" />
+        <h1>Web Dev Starter Pack</h1>
+        <button className="btn" onClick={loginWithRedirect}>
+          Login / SignUp
+        </button>
+      </div>
+    </Wrapper>
+  );
 };
 const Wrapper = styled.section`
   min-height: 100vh;
