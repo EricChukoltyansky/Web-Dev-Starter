@@ -19,17 +19,21 @@ const PoliticsProvider = ({ children }) => {
 
   // const checkRequest = () => {
   //   axios(`${rootUrl}/rate_limit`)
-  //     .then((data) => {})
+  //     .then((data) => {
+  //       console.log()
+  //     })
   //     .catch((err) => console.log(err));
   // };
 
   const checkRequest = async () => {
     try {
-      const {data} = await axios.get(rootUrl);
-      let {rate:{remaining}} = data
+      const {data} = await axios.get(`${rootUrl}/rate_limit`);
+      console.log({data})
+      let {rate:{remaining}} = data;
+      console.log("remaining",remaining)
       setRequests(remaining)
       if(remaining === 0) {
-        
+
       }
     } catch (err) {}
   };
@@ -38,7 +42,7 @@ const PoliticsProvider = ({ children }) => {
     checkRequest();
   }, []);
   return (
-    <PoliticsContext.Provider value={{ githubUser, repos, followers }}>
+    <PoliticsContext.Provider value={{ githubUser, repos, followers, requests, loading }}>
       {children}
     </PoliticsContext.Provider>
   );
