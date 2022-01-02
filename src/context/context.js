@@ -15,7 +15,7 @@ const PoliticsProvider = ({ children }) => {
   const [repos, setRepos] = useState(mockRepos);
   const [followers, setFollowers] = useState(mockFollowers);
   const [requests, setRequests] = useState(0);
-  const [loading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({ show: false, msg: "" });
 
   // const checkRequest = () => {
@@ -26,9 +26,31 @@ const PoliticsProvider = ({ children }) => {
   //     .catch((err) => console.log(err));
   // };
 
-  const searchUser = async(user) => {
-    console.log(user)
-  }
+  const searchUser = async (user) => {
+    toggleError();
+    setIsLoading(true);
+    console.log(user);
+    const response = await axios(`${rootUrl}/users/${user}`).catch((err) =>
+      console.log(err)
+    );
+    console.log(response);
+    if (response) {
+      setGithubUser(response.data);
+      const { login, followers_url } = response.data;
+      axios(`${rootUrl}/users/${login}/repos?per_page=100`).then((response) =>
+        // console.log(response)
+        setRepos(response.data)
+      );
+      axios(`${followers_url}?per_page=100`).then((response) =>
+        // console.log(response)
+        setFollowers(response.data)
+      );
+    } else {
+      toggleError(true, "there is no user with that username");
+    }
+    checkRequest();
+    setIsLoading(false);
+  };
 
   const checkRequest = async () => {
     try {
@@ -55,7 +77,15 @@ const PoliticsProvider = ({ children }) => {
   }, []);
   return (
     <PoliticsContext.Provider
-      value={{ githubUser, repos, followers, requests, error, searchUser }}
+      value={{
+        githubUser,
+        repos,
+        followers,
+        requests,
+        error,
+        searchUser,
+        isLoading,
+      }}
     >
       {children}
     </PoliticsContext.Provider>
