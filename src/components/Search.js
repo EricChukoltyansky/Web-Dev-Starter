@@ -4,18 +4,27 @@ import { MdSearch } from "react-icons/md";
 import { PoliticsContext } from "../context/context";
 const Search = () => {
   const [user, setUser] = React.useState("");
-  console.log({PoliticsContext})
-  const { requests } = React.useContext(PoliticsContext);
-  console.log({requests})
+  // console.log({PoliticsContext})
+  const { requests, error, searchUser } = React.useContext(PoliticsContext);
+  // console.log({requests})
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(user);
+    // console.log(user);
+    if (user) {
+      searchUser(user)
+    }
+
 
     setUser("");
   };
   return (
     <section className="section">
       <Wrapper className="section-center">
+        {error.show && (
+          <ErrorWrapper>
+            <p>{error.msg}</p>
+          </ErrorWrapper>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="form-control">
             <MdSearch />

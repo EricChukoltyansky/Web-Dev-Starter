@@ -16,6 +16,7 @@ const PoliticsProvider = ({ children }) => {
   const [followers, setFollowers] = useState(mockFollowers);
   const [requests, setRequests] = useState(0);
   const [loading, setIsLoading] = useState(false);
+  const [error, setError] = useState({ show: false, msg: "" });
 
   // const checkRequest = () => {
   //   axios(`${rootUrl}/rate_limit`)
@@ -25,24 +26,37 @@ const PoliticsProvider = ({ children }) => {
   //     .catch((err) => console.log(err));
   // };
 
+  const searchUser = async(user) => {
+    console.log(user)
+  }
+
   const checkRequest = async () => {
     try {
-      const {data} = await axios.get(`${rootUrl}/rate_limit`);
-      console.log({data})
-      let {rate:{remaining}} = data;
-      console.log("remaining",remaining)
-      setRequests(remaining)
-      if(remaining === 0) {
+      const { data } = await axios.get(`${rootUrl}/rate_limit`);
+      console.log({ data });
+      let {
+        rate: { remaining },
+      } = data;
 
+      console.log("remaining", remaining);
+      setRequests(remaining);
+      if (remaining === 0) {
+        toggleError(true, "Sorry, hourly requests rate has exceeded");
       }
     } catch (err) {}
   };
+
+  function toggleError(show = false, msg = "") {
+    setError({ show, msg });
+  }
 
   useEffect(() => {
     checkRequest();
   }, []);
   return (
-    <PoliticsContext.Provider value={{ githubUser, repos, followers, requests, loading }}>
+    <PoliticsContext.Provider
+      value={{ githubUser, repos, followers, requests, error, searchUser }}
+    >
       {children}
     </PoliticsContext.Provider>
   );
