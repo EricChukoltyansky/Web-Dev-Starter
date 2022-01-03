@@ -5,46 +5,59 @@ import { ExampleChart, Pie3D, Column3D, Bar3D, Doughnut2D } from "./Charts";
 const Repos = () => {
   const { repos } = React.useContext(PoliticsContext);
   // console.log({ repos });
-  let languages = repos.reduce((total, item) => {
-    const { language } = item;
-    // if (!language) {
-    //   return total;
-    // }
+  const languages = repos.reduce((total, item) => {
+    const { language, stargazers_count } = item;
+    if (!language) {
+      return total;
+    }
     if (!total[language]) {
-      total[language] = { label: language, value: 1 };
+      total[language] = { label: language, value: 1, stars: stargazers_count };
     } else {
       total[language] = {
         ...total[language],
         value: total[language].value + 1,
+        stars: total[language].stars + stargazers_count,
       };
     }
     return total;
   }, {});
-  languages = Object.values(languages)
+  console.log("languages", languages);
+  const mostUsed = Object.values(languages)
     .sort((a, b) => {
       return b.value - a.value;
     })
     .slice(0, 6);
 
-  // const chartData = [
-  //   {
-  //     label: "HTML",
-  //     value: "13",
-  //   },
-  //   {
-  //     label: "CSS",
-  //     value: "23",
-  //   },
-  //   {
-  //     label: "Javascript",
-  //     value: "80",
-  //   },
-  // ];
+  const mostPopular = Object.values(languages)
+    .sort((a, b) => {
+      return b.stars - a.stars;
+    })
+    // .map((item) => {
+    //   return { ...item, value: item.stars };
+    // });
+  console.log(mostPopular)
+
+  const chartData = [
+    {
+      label: "HTML",
+      value: "13",
+    },
+    {
+      label: "CSS",
+      value: "23",
+    },
+    {
+      label: "Javascript",
+      value: "80",
+    },
+  ];
 
   return (
     <section className="section">
       <Wrapper className="section-center">
-        <Pie3D data={languages} />
+        <Pie3D data={mostUsed} />
+        <div></div>
+        <Doughnut2D data={chartData} />
       </Wrapper>
     </section>
   );
@@ -63,14 +76,14 @@ const Wrapper = styled.div`
   }
 
   div {
-    width: 100% !important;
+    width: 100%;
   }
   .fusioncharts-container {
-    width: 100% !important;
+    width: 100%;
   }
   svg {
-    width: 100% !important;
-    border-radius: var(--radius) !important;
+    width: 100%;
+    border-radius: var(--radius);
   }
 `;
 

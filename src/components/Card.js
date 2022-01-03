@@ -15,7 +15,7 @@ const Card = () => {
     twitter_username,
   } = githubUser;
 
-  console.log(githubUser);
+  // console.log(githubUser);
 
   return (
     <Wrapper>
@@ -54,7 +54,7 @@ const Wrapper = styled.article`
   border-bottom-right-radius: var(--radius);
   position: relative;
   &::before {
-    content: "Politician";
+    content: "Profile";
     position: absolute;
     top: 0;
     left: 0;
