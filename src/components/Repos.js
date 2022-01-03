@@ -32,32 +32,52 @@ const Repos = () => {
     .sort((a, b) => {
       return b.stars - a.stars;
     })
-    // .map((item) => {
-    //   return { ...item, value: item.stars };
-    // });
-  console.log(mostPopular)
+    .map((item) => {
+      return { ...item, value: item.stars };
+    })
+    .slice(0, 6);
+  // console.log(mostPopular);
 
-  const chartData = [
-    {
-      label: "HTML",
-      value: "13",
+  let { stars, forks } = repos.reduce(
+    (total, item) => {
+      const { stargazers_count, name, forks } = item;
+      total.stars[stargazers_count] = { label: name, value: stargazers_count };
+      total.forks[forks] = { label: name, value: forks };
+      return total;
     },
     {
-      label: "CSS",
-      value: "23",
-    },
-    {
-      label: "Javascript",
-      value: "80",
-    },
-  ];
+      stars: {},
+      forks: {},
+    }
+  );
+
+  stars = Object.values(stars).slice(-5).reverse();
+  forks = Object.values(forks).slice(-5).reverse();
+  console.log(stars)
+  console.log(forks)
+
+  // const chartData = [
+  //   {
+  //     label: "HTML",
+  //     value: "13",
+  //   },
+  //   {
+  //     label: "CSS",
+  //     value: "23",
+  //   },
+  //   {
+  //     label: "Javascript",
+  //     value: "80",
+  //   },
+  // ];
 
   return (
     <section className="section">
       <Wrapper className="section-center">
         <Pie3D data={mostUsed} />
-        <div></div>
-        <Doughnut2D data={chartData} />
+        <Column3D data={stars} />
+        <Doughnut2D data={mostPopular} />
+        <Bar3D data={forks} />
       </Wrapper>
     </section>
   );
