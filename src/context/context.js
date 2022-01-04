@@ -1,10 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
+import {
+  SET_LOADING,
+  SET_STORIES,
+  REMOVE_STORY,
+  HANDLE_PAGE,
+  HANDLE_SEARCH,
+} from "../components/reducer";
+import reducer from "../components/reducer";
 import mockUser from "./mockData.js/mockUser";
 import mockRepos from "./mockData.js/mockRepos";
 import mockFollowers from "./mockData.js/mockFollowers";
 import axios from "axios";
 
 const rootUrl = "https://api.github.com";
+const API_ENDPOINT = "https://hn.algolia.com/api/v1/search?";
+
+const initialState = {
+  isLoading:true,
+};
 
 const PoliticsContext = React.createContext();
 
@@ -17,6 +30,7 @@ const PoliticsProvider = ({ children }) => {
   const [requests, setRequests] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({ show: false, msg: "" });
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   // const checkRequest = () => {
   //   axios(`${rootUrl}/rate_limit`)
@@ -25,6 +39,10 @@ const PoliticsProvider = ({ children }) => {
   //     })
   //     .catch((err) => console.log(err));
   // };
+
+  const fetchStories = async (url) => {
+    dispatch({ type: "SET_LOADING" });
+  };
 
   const searchUser = async (user) => {
     toggleError();
@@ -74,6 +92,7 @@ const PoliticsProvider = ({ children }) => {
 
   useEffect(() => {
     checkRequest();
+    fetchStories();
   }, []);
   return (
     <PoliticsContext.Provider
@@ -85,6 +104,7 @@ const PoliticsProvider = ({ children }) => {
         error,
         searchUser,
         isLoading,
+        ...state
       }}
     >
       {children}
