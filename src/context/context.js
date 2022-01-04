@@ -5,7 +5,7 @@ import {
   REMOVE_STORY,
   HANDLE_PAGE,
   HANDLE_SEARCH,
-} from "../components/reducer";
+} from "../components/actions";
 import reducer from "../components/reducer";
 import mockUser from "./mockData.js/mockUser";
 import mockRepos from "./mockData.js/mockRepos";
@@ -13,10 +13,9 @@ import mockFollowers from "./mockData.js/mockFollowers";
 import axios from "axios";
 
 const rootUrl = "https://api.github.com";
-const API_ENDPOINT = "https://hn.algolia.com/api/v1/search?";
 
 const initialState = {
-  isLoading:true,
+  isSpinnerLoading: true,
 };
 
 const PoliticsContext = React.createContext();
@@ -41,7 +40,7 @@ const PoliticsProvider = ({ children }) => {
   // };
 
   const fetchStories = async (url) => {
-    dispatch({ type: "SET_LOADING" });
+    dispatch({ type: SET_LOADING });
   };
 
   const searchUser = async (user) => {
@@ -104,7 +103,7 @@ const PoliticsProvider = ({ children }) => {
         error,
         searchUser,
         isLoading,
-        ...state
+        ...state,
       }}
     >
       {children}
