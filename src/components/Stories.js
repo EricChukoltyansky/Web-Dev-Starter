@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useGlobalContext } from "./context";
+import { PoliticsContext } from "../context/context";
 
 const Stories = () => {
   return <h2>stories component</h2>;
