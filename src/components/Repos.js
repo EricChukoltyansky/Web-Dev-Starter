@@ -4,7 +4,7 @@ import { PoliticsContext } from "../context/context";
 import { ExampleChart, Pie3D, Column3D, Bar3D, Doughnut2D } from "./Charts";
 const Repos = () => {
   const { repos } = React.useContext(PoliticsContext);
-  // console.log({ repos });
+  console.log("repos", repos);
   const languages = repos.reduce((total, item) => {
     const { language, stargazers_count } = item;
     if (!language) {
@@ -53,8 +53,8 @@ const Repos = () => {
 
   stars = Object.values(stars).slice(-5).reverse();
   forks = Object.values(forks).slice(-5).reverse();
-  console.log(stars)
-  console.log(forks)
+  console.log(stars);
+  console.log(forks);
 
   // const chartData = [
   //   {

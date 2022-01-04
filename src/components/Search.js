@@ -5,15 +5,15 @@ import { PoliticsContext } from "../context/context";
 const Search = () => {
   const [user, setUser] = React.useState("");
   // console.log({PoliticsContext})
-  const { requests, error, searchUser, isLoading } = React.useContext(PoliticsContext);
+  const { requests, error, searchUser, isLoading } =
+    React.useContext(PoliticsContext);
   // console.log({requests})
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(user);
     if (user) {
-      searchUser(user)
+      searchUser(user);
     }
-
 
     setUser("");
   };
@@ -34,7 +34,9 @@ const Search = () => {
               value={user}
               onChange={(e) => setUser(e.target.value)}
             />
-            {requests > 0 && !isLoading && <button type="submit">Search</button>}
+            {requests > 0 && !isLoading && (
+              <button type="submit">Search</button>
+            )}
           </div>
         </form>
         <h3>Requests: {requests} / 60</h3>

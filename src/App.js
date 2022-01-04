@@ -8,7 +8,7 @@ function App() {
       <AuthWrapper>
         <Router>
           <Switch>
-            <PrivateRoute path="/" exact={true}>
+            <PrivateRoute path="/" exact>
               <Dashboard></Dashboard>
             </PrivateRoute>
             <Route path="/login">
