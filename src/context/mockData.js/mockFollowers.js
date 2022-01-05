@@ -70,3 +70,4 @@ export default [
     site_admin: false,
   },
 ];
+

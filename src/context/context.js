@@ -7,9 +7,9 @@ import {
   HANDLE_SEARCH,
 } from "../components/actions";
 import reducer from "../components/reducer";
-import mockUser from "./mockData.js/mockUser";
-import mockRepos from "./mockData.js/mockRepos";
-import mockFollowers from "./mockData.js/mockFollowers";
+import mockUser from "./mockData.js/mock";
+import mockRepos from "./mockData.js/mock3";
+import mockFollowers from "./mockData.js/mock2";
 import axios from "axios";
 
 const rootUrl = "https://api.github.com";
