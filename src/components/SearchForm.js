@@ -3,7 +3,19 @@ import React from "react";
 import { PoliticsContext } from "../context/context";
 
 const SearchForm = () => {
-  return <h2>search form</h2>;
+  const { query, handleSearch } = React.useContext(PoliticsContext);
+
+  return (
+    <form className="search-form" onSubmit={(e) => e.preventDefault()}>
+      <input
+        type="text"
+        className="form-input"
+        value={query}
+        placeholder="Search for Tech News"
+        onChange={(e) => handleSearch(e.target.value)}
+      />
+    </form>
+  );
 };
 
 export default SearchForm;

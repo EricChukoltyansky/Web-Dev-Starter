@@ -13,9 +13,14 @@ import mockFollowers from "./mockData.js/mockFollowers";
 import axios from "axios";
 
 const rootUrl = "https://api.github.com";
+const API_ENDPOINT = "https://hn.algolia.com/api/v1/search?";
 
 const initialState = {
   isSpinnerLoading: true,
+  hits: [],
+  query: "",
+  page: 0,
+  ngPages: 0,
 };
 
 const PoliticsContext = React.createContext();
@@ -31,16 +36,31 @@ const PoliticsProvider = ({ children }) => {
   const [error, setError] = useState({ show: false, msg: "" });
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  // const checkRequest = () => {
-  //   axios(`${rootUrl}/rate_limit`)
-  //     .then((data) => {
-  //       console.log()
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
+  const removeStory = (id) => {
+    dispatch({ type: REMOVE_STORY, payload: id });
+  };
+
+  const handleSearch = (query) => {
+    dispatch({ type: HANDLE_SEARCH, payload: query });
+  };
+
+  const handlePage = (value) => {
+    console.log(value)
+  }
 
   const fetchStories = async (url) => {
     dispatch({ type: SET_LOADING });
+    try {
+      const response = await axios(url);
+      const data = response.data;
+      console.log(response.data);
+      dispatch({
+        type: SET_STORIES,
+        payload: { hits: data.hits, nbPages: data.nbPages },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const searchUser = async (user) => {
@@ -91,8 +111,8 @@ const PoliticsProvider = ({ children }) => {
 
   useEffect(() => {
     checkRequest();
-    fetchStories();
-  }, []);
+    fetchStories(`${API_ENDPOINT}query=${state.query}&page=${state.page}`);
+  }, [state.query]);
   return (
     <PoliticsContext.Provider
       value={{
@@ -104,6 +124,9 @@ const PoliticsProvider = ({ children }) => {
         searchUser,
         isLoading,
         ...state,
+        removeStory,
+        handleSearch,
+        handlePage
       }}
     >
       {children}
