@@ -45,8 +45,8 @@ const PoliticsProvider = ({ children }) => {
   };
 
   const handlePage = (value) => {
-    console.log(value)
-  }
+    dispatch({ type: HANDLE_PAGE, payload: value });
+  };
 
   const fetchStories = async (url) => {
     dispatch({ type: SET_LOADING });
@@ -112,7 +112,7 @@ const PoliticsProvider = ({ children }) => {
   useEffect(() => {
     checkRequest();
     fetchStories(`${API_ENDPOINT}query=${state.query}&page=${state.page}`);
-  }, [state.query]);
+  }, [state.query, state.page]);
   return (
     <PoliticsContext.Provider
       value={{
@@ -126,7 +126,7 @@ const PoliticsProvider = ({ children }) => {
         ...state,
         removeStory,
         handleSearch,
-        handlePage
+        handlePage,
       }}
     >
       {children}
